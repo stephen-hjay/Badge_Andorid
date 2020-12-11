@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:accessibilityHeading="false"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tx1"
+        android:layout_width="194dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="56dp"
+        android:text="-----------"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txx" />
+
+    <TextView
+        android:id="@+id/debug"
+        android:layout_width="323dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="80dp"
+        android:text="-------------"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txx2" />
+
+    <TextView
+        android:id="@+id/tx3"
+        android:layout_width="194dp"
+        android:layout_height="24dp"
+        android:text="----------"
+        app:layout_constraintStart_toStartOf="@+id/debug"
+        app:layout_constraintTop_toTopOf="@+id/txx3" />
+
+    <TextView
+        android:id="@+id/smTx"
+        android:layout_width="132dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="32dp"
+        android:text="----------"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="110dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="52dp"
+        android:text="MicData"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="111dp"
+        android:layout_height="27dp"
+        android:text="badge2:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/badge2id"
+        android:layout_width="80dp"
+        android:layout_height="26dp"
+        android:text="----------"
+        app:layout_constraintStart_toStartOf="@+id/micData"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="112dp"
+        android:layout_height="27dp"
+        android:text="Nearest"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="139dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="StateMachine"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/blueData"
+        android:layout_width="82dp"
+        android:layout_height="22dp"
+        android:text="----------"
+        app:layout_constraintStart_toStartOf="@+id/micData"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="98dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="64dp"
+        android:text="MicState"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/micData"
+        android:layout_width="83dp"
+        android:layout_height="23dp"
+        android:text="----------"
+        app:layout_constraintStart_toStartOf="@+id/micState"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/micState"
+        android:layout_width="83dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="216dp"
+        android:text="----------"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/txx"
+        android:layout_width="94dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="32dp"
+        android:text="Acc 1:"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txx2"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:text="Debug:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txx"
+        app:layout_constraintTop_toBottomOf="@+id/txx"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txx3"
+        android:layout_width="47dp"
+        android:layout_height="26dp"
+        android:text="Acc 3:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txx2"
+        app:layout_constraintTop_toBottomOf="@+id/txx"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <Button
+        android:id="@+id/btCam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="340dp"
+        android:text="startCam"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tx1" />
+
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="264dp"
+        android:text="startSensor"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resetBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESET"
+        app:layout_constraintStart_toStartOf="@+id/btCam"
+        app:layout_constraintTop_toTopOf="@+id/bt1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="437dp" />
+
+    <ImageView
+        android:id="@+id/blackScreen"
+        android:layout_width="410dp"
+        android:layout_height="733dp"
+        android:background="#00000000"
+        android:foregroundTint="#00000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/colorBackgroundFloating"
+        tools:srcCompat="@color/colorAccent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
