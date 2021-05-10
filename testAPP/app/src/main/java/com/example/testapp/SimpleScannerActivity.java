@@ -106,6 +106,7 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
 
     private void scanOk(String code){
         GlobalVariables.Variables.haveQR=true;
+        // used to updata global QRCode variable;
         new Data("QRcode",code);
         new Thread(){
             @Override
@@ -123,12 +124,13 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
     }
 
     class Data extends DataCache {
-        LinkedList<String> a;
+        LinkedList<String> result;
         public Data(String type, String code){
             super(type);
-            a=new LinkedList<>();
-            a.add(code);
+            result=new LinkedList<>();
+            result.add(code);
             this.addTimeStamp();
+
             GlobalVariables.Variables.qrCode=(ClassToJson.convert(this));//only one element, directly send
         }
     }

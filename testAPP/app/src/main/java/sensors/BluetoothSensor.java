@@ -282,7 +282,7 @@ public class BluetoothSensor extends AppCompatActivity implements SensorFunction
         }
 
         void addData(ArrayList<String> macTmp) {
-            a=macTmp;
+            a = macTmp;
             for (int i=0;i<macTmp.size();i++) {
                 this.addTimeStamp();
             }

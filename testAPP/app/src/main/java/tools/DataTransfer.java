@@ -1,5 +1,7 @@
 package tools;
 
+import com.example.testapp.GlobalVariables;
+
 public class DataTransfer {//auto send data class
     private boolean canSend;
     public long period;
@@ -46,7 +48,9 @@ public class DataTransfer {//auto send data class
                     }
                     synchronized (dataCache.dataLock) {
                         if(canSend) {
-                            RequestSender.postDataWithParam(ClassToJson.convert(dataCache), sensorModuleName);
+                            // encryption enbale
+                            String jsonStr = ClassToJson.convert(dataCache);
+                            RequestSender.postDataWithParam(jsonStr,sensorModuleName);
                             dataCache.clear();
                         }
                     }

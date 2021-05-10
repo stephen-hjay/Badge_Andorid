@@ -51,6 +51,7 @@ public class AccelerometerSensor implements SensorEventListener, SensorFunction 
                 @Override
                 public void run() {
                     try{
+                        // 2000 ms 一次
                         Thread.sleep(GlobalVariables.Parameters.ACC_FIX_PERIOD);
                     }catch(Exception e){}
                     fix();
@@ -62,6 +63,7 @@ public class AccelerometerSensor implements SensorEventListener, SensorFunction 
     @Override
     public void onSensorChanged(SensorEvent event) {
         if(displayOn) {
+            // display to test the accelerometer values change
             displayData[0].setText(String.format("%.5f", event.values[0]));
 //            displayData[1].setText(String.format("%.5f", event.values[1]));
 //            displayData[2].setText(String.format("%.5f", event.values[2]));
@@ -71,6 +73,7 @@ public class AccelerometerSensor implements SensorEventListener, SensorFunction 
         sampleCnt++;
         if(sampleCnt>=sampleDiv){
             sampleCnt=0;
+            // accelerometer fix
             if(GlobalVariables.Parameters.ACC_FIX){
                 synchronized (fixLock){
                     for(int i=0;i<3;i++){
@@ -79,8 +82,6 @@ public class AccelerometerSensor implements SensorEventListener, SensorFunction 
                     fixAccuCnt++;
                 }
                 //correct acc values
-
-
             }
             dataCache.addData(event.values);
         }
@@ -151,31 +152,31 @@ public class AccelerometerSensor implements SensorEventListener, SensorFunction 
     }
 
     private class Data extends DataCache{
-        LinkedList<Float> a;
-        LinkedList<Float> b;
-        LinkedList<Float> c;
+        LinkedList<Float> x;
+        LinkedList<Float> y;
+        LinkedList<Float> z;
         public Data(String ty){
             super(ty);
-            a=new LinkedList<>();
-            b=new LinkedList<>();
-            c=new LinkedList<>();
+            x=new LinkedList<>();
+            y=new LinkedList<>();
+            z=new LinkedList<>();
         }
 
         @Override
         public void clear(){
 //            synchronized (dataLock) {// sending need synchronized, no need another here
                 time_stamp = new LinkedList<>();
-                a = new LinkedList<>();
-                b = new LinkedList<>();
-                c = new LinkedList<>();
+                x = new LinkedList<>();
+                y = new LinkedList<>();
+                z = new LinkedList<>();
 //            }
         }
 
         void addData(float[] data){
             synchronized (dataLock){
-                a.add(data[0]);
-                b.add(data[1]);
-                c.add(data[2]);
+                x.add(data[0]);
+                y.add(data[1]);
+                z.add(data[2]);
                 this.addTimeStamp();
             }
         }

@@ -91,7 +91,6 @@ public class MicrophoneSensor implements SensorFunction {
                     throw new RuntimeException("Unable to getMinBufferSize");
                 }
 
-
                 audiorecord = new AudioRecord(AudioSource, SampleRateInHz, ChannelConfig, AudioFormat_, BufferSize);
                 if (audiorecord.getState() == AudioRecord.STATE_UNINITIALIZED) {
                     throw new RuntimeException("The AudioRecord is not uninitialized");
@@ -232,13 +231,73 @@ public class MicrophoneSensor implements SensorFunction {
             /////////////////Voice detection
             if(GlobalVariables.Parameters.VOICE_DETECT) {
                 if(GlobalVariables.Parameters.VOICE_ACTIVITY_DETECT){
-                    // modify this state to control
-                    if (isSpeech) {
-                        GlobalVariables.Variables.deLog.setText("Voice Detected");
-                        dataTransfer.resume();
-                    } else {
-                        GlobalVariables.Variables.deLog.setText("No Voice");
-                        dataTransfer.pause();
+
+                    if (GlobalVariables.Parameters.VOICE_ALWAYS_SEND){
+                        // modify this state to control
+                        if (isSpeech) {
+                            GlobalVariables.Variables.deLog.setText("Voice Detected");
+                            dataTransfer.resume();
+                            if (enableDisplay) {
+                                if (decible > 1) {
+                                    decible = 20 * Math.log10(decible);
+                                }
+                                textViews[0].setText(String.format("%.2f", decible));
+                            }
+
+                            divCnt++;
+                            if(divCnt>=divLimit){
+                                divCnt=0;
+                                dataCache.addData(20 * Math.log10(decible),1.0);
+                            }
+                        } else {
+                            GlobalVariables.Variables.deLog.setText("No Voice");
+                            dataTransfer.resume();
+                            if (enableDisplay) {
+                                if (decible > 1) {
+                                    decible = 20 * Math.log10(decible);
+                                }
+                                textViews[0].setText(String.format("%.2f", decible));
+                            }
+
+                            divCnt++;
+                            if(divCnt>=divLimit){
+                                divCnt=0;
+                                dataCache.addData(20 * Math.log10(decible),0.0);
+                            }
+                        }
+                    }else{
+                        // modify this state to control
+                        if (isSpeech) {
+                            GlobalVariables.Variables.deLog.setText("Voice Detected");
+                            dataTransfer.resume();
+                            if (enableDisplay) {
+                                if (decible > 1) {
+                                    decible = 20 * Math.log10(decible);
+                                }
+                                textViews[0].setText(String.format("%.2f", decible));
+                            }
+
+                            divCnt++;
+                            if(divCnt>=divLimit){
+                                divCnt=0;
+                                dataCache.addData(20 * Math.log10(decible),1.0);
+                            }
+                        } else {
+                            GlobalVariables.Variables.deLog.setText("No Voice");
+                            dataTransfer.pause();
+                            if (enableDisplay) {
+                                if (decible > 1) {
+                                    decible = 20 * Math.log10(decible);
+                                }
+                                textViews[0].setText(String.format("%.2f", decible));
+                            }
+
+                            divCnt++;
+                            if(divCnt>=divLimit){
+                                divCnt=0;
+                                dataCache.addData(20 * Math.log10(decible),0.0);
+                            }
+                        }
                     }
                 }else {
                     if (true) {
@@ -248,24 +307,25 @@ public class MicrophoneSensor implements SensorFunction {
                         GlobalVariables.Variables.deLog.setText("No Voice");
                         dataTransfer.pause();
                     }
+                    if (enableDisplay) {
+                        if (decible > 1) {
+                            decible = 20 * Math.log10(decible);
+                        }
+                        textViews[0].setText(String.format("%.2f", decible));
+                    }
+
+                    divCnt++;
+                    if(divCnt>=divLimit){
+                        divCnt=0;
+                        dataCache.addData(20 * Math.log10(decible),0.0);
+                    }
                 }
             }
             ///////////////////////////////////////////
 
     //       textViews[0].setText("" + rate);
     //       textViews[1].setText("" + energy);
-            if (enableDisplay) {
-                if (decible > 1) {
-                    decible = 20 * Math.log10(decible);
-                }
-                textViews[0].setText(String.format("%.2f", decible));
-            }
 
-            divCnt++;
-            if(divCnt>=divLimit){
-                divCnt=0;
-                dataCache.addData(20 * Math.log10(decible),0.0);
-            }
 
 
         }
@@ -273,27 +333,27 @@ public class MicrophoneSensor implements SensorFunction {
 
     class Data extends DataCache{
 
-        public LinkedList<Double> a;
-        public LinkedList<Double> b;
+        public LinkedList<Double> decibel;
+        public LinkedList<Double> frequency;
 
 
         public Data(String type){
             super(type);
-            a=new LinkedList<>();
-            b=new LinkedList<>();
+            decibel=new LinkedList<>();
+            frequency=new LinkedList<>();
         }
 
         @Override
         public void clear() {
-            a=new LinkedList<>();
-            b=new LinkedList<>();
+            decibel=new LinkedList<>();
+            frequency=new LinkedList<>();
             time_stamp=new LinkedList<>();
         }
 
         public void addData(Double dec, Double freq){
             synchronized (this.dataLock) {
-                a.add(dec);// dec -> decimal
-                b.add(freq);// freq -> frequency
+                decibel.add(dec);// dec -> decimal
+                frequency.add(freq);// freq -> frequency
                 addTimeStamp();
             }
         }

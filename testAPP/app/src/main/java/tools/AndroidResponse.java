@@ -2,14 +2,14 @@ package tools;
 
 
 // for json to object mapping test
-public class ResponseSuccessEntity {
+public class AndroidResponse {
 
     String success = "false";
-    public ResponseSuccessEntity(String success) {
+    public AndroidResponse(String success) {
         this.success = success;
     }
 
-    public ResponseSuccessEntity() {
+    public AndroidResponse() {
     }
 
     public String getSuccess() {

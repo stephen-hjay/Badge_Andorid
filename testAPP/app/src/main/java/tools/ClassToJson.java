@@ -1,5 +1,9 @@
 package tools;
 
+import android.util.Log;
+
+import com.example.testapp.GlobalVariables;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -8,6 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 public class ClassToJson {
+
+    public static void main(String[] args) {
+        System.out.println(25.0/40.0);
+    }
     public static String convert(Object obj) {
         Class c = obj.getClass();
         Class parent = c.getSuperclass();
@@ -61,4 +69,45 @@ public class ClassToJson {
 
         return sb.toString();
     }
+
+    public static String encrypt(String json, String type, long currentVersion){
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("{\"data\":");
+        stringBuffer.append("\"");
+        stringBuffer.append(AES.Encryption.encrypt(json, GlobalVariables.Encryption.secretKey,
+                GlobalVariables.Encryption.algorithm));
+        stringBuffer.append("\"");
+        stringBuffer.append(",");
+        stringBuffer.append("\"type\":");
+        stringBuffer.append("\"");
+        stringBuffer.append(type);
+        stringBuffer.append("\"");
+        stringBuffer.append(",");
+        stringBuffer.append("\"version\":");
+//        Log.e("currentVersion",""+currentVersion);
+        stringBuffer.append(currentVersion);
+        stringBuffer.append("}");
+        return stringBuffer.toString();
+    }
+
+    public static String encrypt(String json, String type){
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("{\"data\":");
+        stringBuffer.append("\"");
+        stringBuffer.append(AES.Encryption.encrypt(json, GlobalVariables.Encryption.secretKey,
+                GlobalVariables.Encryption.algorithm));
+        stringBuffer.append("\"");
+        stringBuffer.append(",");
+        stringBuffer.append("\"type\":");
+        stringBuffer.append("\"");
+        stringBuffer.append(type);
+        stringBuffer.append("\"");
+        stringBuffer.append("}");
+        return stringBuffer.toString();
+    }
+
+
+
+
+
 }

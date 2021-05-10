@@ -43,4 +43,5 @@ dependencies {
 //    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
     //gson parsers
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
 }

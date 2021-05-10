@@ -34,9 +34,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import tools.AndroidResponse;
 import tools.ClassToJson;
 import tools.DataCache;
-import tools.ResponseSuccessEntity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                         return;
                     } else {
                         GlobalVariables.Parameters.dataSetId=dataID;
-
+                        Log.i("===========login_test","login test===========");
                         //check if correct
                         if(GlobalVariables.Parameters.SERVER_LOGIN) {
                             showToast("logging in, please wait");
@@ -181,6 +181,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
@@ -208,46 +210,64 @@ public class LoginActivity extends AppCompatActivity {
     void checkToServer(String uname,String pwd,String uID){
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(ClassToJson.convert(new Data(uname,pwd,uID)), JSON);
-        Request request = new Request.Builder().url(GlobalVariables.Parameters.SERVER_URL).post(body).build();
-        //  String TAG = "logintest";
+        String json = ClassToJson.convert(new Data(uname,pwd,uID));
+        Log.i("=======",json);
+        RequestBody body;
+        Request request;
+        if (GlobalVariables.Encryption.encryption){
+            String encryptedJson = ClassToJson.encrypt(json,"MetaData");
+            Log.i("=======",encryptedJson);
+            body = RequestBody.create(encryptedJson, JSON);
+            request = new Request.Builder().url(GlobalVariables.Parameters.LOGIN_URL).post(body).build();
+        }else{
+            body = RequestBody.create(json, JSON);
+            request = new Request.Builder().url(GlobalVariables.Parameters.LOGIN_URL).post(body).build();
+
+        }
+
+              //  String TAG = "logintest";
         // asynchronous request with callback.
         client.newCall(request).enqueue((new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+//                showToast("Connection to");
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                ResponseBody body = response.body();
-                if (body != null) {
-                    Gson gson=new Gson();
-                    GlobalVariables.Variables.loginCode=response.code();
-                    String responseJSON = response.body().string();
-                    ResponseSuccessEntity responseSuccessEntity = gson.fromJson(responseJSON,ResponseSuccessEntity.class);
-                    GlobalVariables.Variables.loginResponseBody = responseSuccessEntity.getSuccess();
-                    Log.d("reponse result",responseSuccessEntity.getSuccess());
-                    body.close();
-//                    Log.d("reponseCode",GlobalVariables.Variables.loginCode+"");
-
+            public void onResponse(@NotNull Call call, @NotNull Response response ) throws IOException {
+                ResponseBody responseBody = response.body();
+                Gson gson=new Gson();
+                GlobalVariables.Variables.loginCode=response.code();
+//                Log.d("ResponseJSon",bodyJson);
+                String bodyJson = responseBody.string();
+                Log.e("================ResponseJSon",bodyJson);
+                if (GlobalVariables.Parameters.SERVER_LOGIN_JSON){
+                    AndroidResponse androidResponse = gson.fromJson(bodyJson,AndroidResponse.class);
+                    Log.i("================ResponseJSon", androidResponse.getSuccess());
+                    GlobalVariables.Variables.loginResponseBody = androidResponse.getSuccess();
+                }else{
+                    bodyJson = bodyJson.substring(16);
+                    String result = bodyJson.substring(0,bodyJson.lastIndexOf(')')).split("=")[1];
+                    Log.i("================ResponseJSon",result);
+                    GlobalVariables.Variables.loginResponseBody = result;
                 }
+                responseBody.close();
             }
         }));
     }
 
     class Data extends DataCache{
-        String a;//mac addr
-        String b;//user name
-        String c;//user id
-        String d;//pwd
+        String macAddr;//mac addr
+        String userName;//user name
+        String userId;//user id
+        String password;//pwd
         public Data(String uname,String pwd,String uID){
-            super("BadgeMetadata");// user and device ID
+            super("BadgeMetaData");// user and device ID
             // 888 fot test -> BT_MAC_ID for device ID
-            a = GlobalVariables.Parameters.MY_BT_MAC_ID;
-            b=uname;// "lai"
-            c=uID;// "lai8"
-            d=pwd;//"kkk"
+            macAddr = GlobalVariables.Parameters.MY_BT_MAC_ID;
+            userName = uname;// "lai"
+            userId = uID;// "lai8"
+            password = pwd;//"kkk"
             this.addTimeStamp();
         }
     }

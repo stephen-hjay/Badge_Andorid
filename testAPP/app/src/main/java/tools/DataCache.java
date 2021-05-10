@@ -9,7 +9,10 @@ public class DataCache {
     public final String badge_id;
     public final String dataset_id;
     public LinkedList<Long> time_stamp;// yyyy-MM-dd-HH-mm-ss-mss
+    // public LinkedList<Integer> data;
     public Object dataLock;
+
+    // -> LinkedList<Pojo> xxxx
 
     public DataCache(String ty) {
         this.type = ty;
