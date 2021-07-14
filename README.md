@@ -1,6 +1,9 @@
 # Sociometric Badge Android APP 
   
-Developed with Android Studio (Java)  
+Developed with Android Studio (Java)
+
+The front-end project, please refer: https://github.com/stephen-hjay/Badge-Frontend
+The backend project, please refer: https://github.com/stephen-hjay/Badge_Server
   
 ## User Manual   
 Setting up the APP and devices:   
