@@ -3,6 +3,7 @@
 Developed with Android Studio (Java)
 
 The front-end project, please refer: https://github.com/stephen-hjay/Badge-Frontend
+
 The backend project, please refer: https://github.com/stephen-hjay/Badge_Server
   
 ## User Manual   
